@@ -2,9 +2,13 @@ package okano.dev.java.agame.main;
 
 import okano.dev.java.agame.inputs.KeyboardInputs;
 import okano.dev.java.agame.inputs.MouseInputs;
+import okano.dev.java.agame.models.MyRect;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JPanel;
+import java.awt.Color;
+import java.awt.Graphics;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class GamePanel extends JPanel {
@@ -20,6 +24,8 @@ public class GamePanel extends JPanel {
 
     private int frames = 0;
     private long lastCheck = 0;
+
+    private List<MyRect> rects = new ArrayList<>();
 
     public GamePanel() {
         mouseInputs = new MouseInputs(this);
@@ -46,13 +52,22 @@ public class GamePanel extends JPanel {
         this.repaint();
     }
 
+    public void spawnRect(int x, int y) {
+        rects.add(new MyRect(x, y));
+    }
+
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
+
+        for (MyRect rect : rects) {
+            rect.updateRect();
+            rect.draw(g);
+        }
 
         updateRectangle();
 
         g.setColor(this.color);
-        g.fillRect((int)xDelta, (int)yDelta, 200, 50);
+        g.fillRect((int) xDelta, (int) yDelta, 200, 50);
 
     }
 
