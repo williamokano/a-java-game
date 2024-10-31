@@ -18,17 +18,29 @@ public class GamePanel extends JPanel {
     private float yDelta = 0;
 
     private BufferedImage image;
-    private BufferedImage subImage;
+    private BufferedImage[][] animations;
+    private int animationTick, animationIndex, animationSpeed = 15;
 
     public GamePanel() {
         mouseInputs = new MouseInputs(this);
 
         importImg();
+        loadAnimations();
 
         setPreferredSize(new Dimension(1280, 800));
         addKeyListener(new KeyboardInputs(this));
         addMouseListener(mouseInputs);
         addMouseMotionListener(mouseInputs);
+    }
+
+    private void loadAnimations() {
+        animations = new BufferedImage[9][6];
+
+        for (int row = 0; row < animations.length; row++) {
+            for (int column = 0; column < animations[row].length; column++) {
+                animations[row][column] = image.getSubimage(column * 64, row * 40, 64, 40);
+            }
+        }
     }
 
     private void importImg() {
@@ -59,8 +71,17 @@ public class GamePanel extends JPanel {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
 
-        this.subImage = this.image.getSubimage(1 * 64, 8 * 40, 64, 40);
-        g.drawImage(subImage, (int) xDelta, (int) yDelta, 128, 80, null);
+        updateAnimationTick();
+
+        g.drawImage(animations[1][animationIndex], (int) xDelta, (int) yDelta, 128, 80, null);
+    }
+
+    private void updateAnimationTick() {
+        animationTick++;
+        if (animationTick >= animationSpeed) {
+            animationIndex = (animationIndex + 1) % animations[0].length;
+            animationTick = 0;
+        }
     }
 
     public void setRectPos(int x, int y) {
