@@ -1,4 +1,4 @@
-package okano.dev.java.agame;
+package okano.dev.java.agame.main;
 
 import javax.swing.*;
 
@@ -14,6 +14,10 @@ public class GameWindow {
 
         jFrame.add(gamePanel);
 
+        // Center window
+        jFrame.setLocationRelativeTo(null);
+
+        // Show... but must be last
         jFrame.setVisible(true);
     }
 }

@@ -1,4 +1,4 @@
-package okano.dev.java.agame;
+package okano.dev.java.agame.main;
 
 public class Game {
 
@@ -8,5 +8,7 @@ public class Game {
     public Game() {
         this.gamePanel = new GamePanel();
         this.gameWindow = new GameWindow(this.gamePanel);
+
+        this.gamePanel.requestFocus();
     }
 }
