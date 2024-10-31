@@ -6,6 +6,7 @@ import okano.dev.java.agame.models.MyRect;
 
 import javax.swing.JPanel;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +32,7 @@ public class GamePanel extends JPanel {
         mouseInputs = new MouseInputs(this);
         random = new Random();
 
+        setPreferredSize(new Dimension(400, 400));
         addKeyListener(new KeyboardInputs(this));
         addMouseListener(mouseInputs);
         addMouseMotionListener(mouseInputs);
@@ -74,13 +76,13 @@ public class GamePanel extends JPanel {
     private void updateRectangle() {
         xDelta += xDir;
 
-        if (xDelta > 400 || xDelta < 0) {
+        if ((xDelta + 200) > 400 || xDelta < 0) {
             xDir *= -1;
             this.color = getRandomColor();
         }
 
         yDelta += yDir;
-        if (yDelta > 400 || yDelta < 0) {
+        if ((yDelta + 50) > 400 || yDelta < 0) {
             yDir *= -1;
             this.color = getRandomColor();
         }
