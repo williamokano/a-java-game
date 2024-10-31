@@ -1,6 +1,8 @@
 package okano.dev.java.agame.main;
 
 import javax.swing.*;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowFocusListener;
 
 public class GameWindow {
 
@@ -22,5 +24,17 @@ public class GameWindow {
         // Show... but must be last
         jFrame.setResizable(false);
         jFrame.setVisible(true);
+
+        jFrame.addWindowFocusListener(new WindowFocusListener() {
+            @Override
+            public void windowLostFocus(WindowEvent e) {
+                gamePanel.getGame().windowFocusLost();
+            }
+
+            @Override
+            public void windowGainedFocus(WindowEvent e) {
+
+            }
+        });
     }
 }
