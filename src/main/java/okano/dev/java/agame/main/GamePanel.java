@@ -2,6 +2,7 @@ package okano.dev.java.agame.main;
 
 import okano.dev.java.agame.inputs.KeyboardInputs;
 import okano.dev.java.agame.inputs.MouseInputs;
+import okano.dev.java.agame.utilz.Constants;
 
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
@@ -20,6 +21,10 @@ public class GamePanel extends JPanel {
     private BufferedImage image;
     private BufferedImage[][] animations;
     private int animationTick, animationIndex, animationSpeed = 15;
+
+    private int playerAction = Constants.PlayerConstants.IDLE;
+    private int playerDir = -1;
+    private boolean moving = false;
 
     public GamePanel() {
         mouseInputs = new MouseInputs(this);
@@ -72,20 +77,45 @@ public class GamePanel extends JPanel {
         super.paintComponent(g);
 
         updateAnimationTick();
+        setAnimation();
+        updatePos();
 
-        g.drawImage(animations[1][animationIndex], (int) xDelta, (int) yDelta, 128, 80, null);
+        g.drawImage(animations[playerAction][animationIndex], (int) xDelta, (int) yDelta, 256, 160, null);
+    }
+
+    private void setAnimation() {
+        if (moving) {
+            playerAction = Constants.PlayerConstants.RUNNING;
+        } else {
+            playerAction = Constants.PlayerConstants.IDLE;
+        }
+    }
+
+    private void updatePos() {
+        if (moving) {
+            switch (playerDir) {
+                case Constants.Directions.LEFT -> xDelta -= 5;
+                case Constants.Directions.UP -> yDelta -= 5;
+                case Constants.Directions.RIGHT -> xDelta += 5;
+                case Constants.Directions.DOWN -> yDelta += 5;
+            }
+        }
+    }
+
+    public void setDirection(int direction) {
+        playerDir = direction;
+        setMoving(true);
+    }
+
+    public void setMoving(boolean moving) {
+        this.moving = moving;
     }
 
     private void updateAnimationTick() {
         animationTick++;
         if (animationTick >= animationSpeed) {
-            animationIndex = (animationIndex + 1) % animations[0].length;
+            animationIndex = (animationIndex + 1) % Constants.PlayerConstants.getSpriteAmount(playerAction);
             animationTick = 0;
         }
-    }
-
-    public void setRectPos(int x, int y) {
-        xDelta = x;
-        yDelta = y;
     }
 }
