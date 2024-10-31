@@ -65,22 +65,16 @@ public class GamePanel extends JPanel {
         }
     }
 
-    public void changeXDelta(int value) {
-        this.xDelta += value;
-    }
-
-    public void changeYDelta(int value) {
-        this.yDelta += value;
-    }
-
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
 
+        g.drawImage(animations[playerAction][animationIndex], (int) xDelta, (int) yDelta, 256, 160, null);
+    }
+
+    public void updateGame() {
         updateAnimationTick();
         setAnimation();
         updatePos();
-
-        g.drawImage(animations[playerAction][animationIndex], (int) xDelta, (int) yDelta, 256, 160, null);
     }
 
     private void setAnimation() {
