@@ -20,6 +20,7 @@ public class GameWindow {
         jFrame.setLocationRelativeTo(null);
 
         // Show... but must be last
+        jFrame.setResizable(false);
         jFrame.setVisible(true);
     }
 }
