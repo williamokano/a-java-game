@@ -13,8 +13,8 @@ public class GamePanel extends JPanel {
     private float xDelta = 100;
     private float yDelta = 100;
 
-    private float xDir = 0.03f;
-    private float yDir = 0.03f;
+    private float xDir = 1f;
+    private float yDir = 1f;
     private Color color = new Color(150, 20, 30);
     private Random random;
 
@@ -59,8 +59,6 @@ public class GamePanel extends JPanel {
             System.out.println("FPS: " + this.frames);
             this.frames = 0;
         }
-
-        this.repaint();
     }
 
     private void updateRectangle() {
