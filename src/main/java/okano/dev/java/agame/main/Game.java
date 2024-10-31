@@ -1,20 +1,31 @@
 package okano.dev.java.agame.main;
 
+import okano.dev.java.agame.entities.Player;
+
+import java.awt.Graphics;
+
 public class Game implements Runnable {
 
     private GameWindow gameWindow;
     private GamePanel gamePanel;
     private Thread gameThread;
+    private Player player;
 
     private final int FPS_SET = 120;
     private final int UPS_SET = 200;
 
     public Game() {
-        this.gamePanel = new GamePanel();
+        this.initClasses();
+
+        this.gamePanel = new GamePanel(this);
         this.gameWindow = new GameWindow(this.gamePanel);
 
         this.gamePanel.requestFocus();
         this.startGameLoop();
+    }
+
+    private void initClasses() {
+        this.player = new Player(200, 200);
     }
 
     private void startGameLoop() {
@@ -68,7 +79,16 @@ public class Game implements Runnable {
 
     }
 
-    private void update() {
-        gamePanel.updateGame();
+    public void update() {
+//        gamePanel.updateGame();
+        player.update();
+    }
+
+    public void render(Graphics g) {
+        player.render(g);
+    }
+
+    public Player getPlayer() {
+        return player;
     }
 }
