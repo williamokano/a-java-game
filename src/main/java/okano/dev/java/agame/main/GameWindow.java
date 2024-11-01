@@ -22,6 +22,7 @@ public class GameWindow {
         jFrame.setLocationRelativeTo(null);
 
         // Show... but must be last
+        jFrame.setTitle("My Awesome Game from a Platformer tutorial by Kaarin Gaming");
         jFrame.setResizable(false);
         jFrame.setVisible(true);
 
