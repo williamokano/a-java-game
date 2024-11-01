@@ -1,6 +1,7 @@
 package okano.dev.java.agame.main;
 
 import okano.dev.java.agame.entities.Player;
+import okano.dev.java.agame.levels.LevelManager;
 
 import java.awt.Graphics;
 
@@ -10,6 +11,7 @@ public class Game implements Runnable {
     private GamePanel gamePanel;
     private Thread gameThread;
     private Player player;
+    private LevelManager levelManager;
 
     private final int FPS_SET = 120;
     private final int UPS_SET = 200;
@@ -25,6 +27,7 @@ public class Game implements Runnable {
     public Game() {
         this.initClasses();
 
+        this.levelManager = new LevelManager(this);
         this.gamePanel = new GamePanel(this);
         this.gameWindow = new GameWindow(this.gamePanel);
 
@@ -90,10 +93,12 @@ public class Game implements Runnable {
     public void update() {
 //        gamePanel.updateGame();
         player.update();
+        levelManager.update();
     }
 
     public void render(Graphics g) {
         player.render(g);
+        levelManager.draw(g);
     }
 
     public Player getPlayer() {
