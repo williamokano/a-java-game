@@ -1,5 +1,6 @@
 package okano.dev.java.agame.entities;
 
+import okano.dev.java.agame.main.Game;
 import okano.dev.java.agame.utilz.Constants;
 import okano.dev.java.agame.utilz.LoadSave;
 
@@ -27,7 +28,7 @@ public class Player extends Entity {
     }
 
     public void render(Graphics g) {
-        g.drawImage(animations[playerAction][animationIndex], (int) x, (int) y, 64, 40, null);
+        g.drawImage(animations[playerAction][animationIndex], (int) x, (int) y, (int) (64 * Game.SCALE), (int) (40 * Game.SCALE), null);
     }
 
     private void updateAnimationTick() {
