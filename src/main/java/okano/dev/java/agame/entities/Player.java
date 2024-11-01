@@ -1,12 +1,10 @@
 package okano.dev.java.agame.entities;
 
 import okano.dev.java.agame.utilz.Constants;
+import okano.dev.java.agame.utilz.LoadSave;
 
-import javax.imageio.ImageIO;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.io.InputStream;
 
 public class Player extends Entity {
 
@@ -58,7 +56,7 @@ public class Player extends Entity {
             playerAction = Constants.PlayerConstants.ATTACK;
         }
 
-        if (startAnimation  != playerAction) {
+        if (startAnimation != playerAction) {
             resetAnimationTick();
         }
     }
@@ -89,26 +87,14 @@ public class Player extends Entity {
     }
 
     private void loadAnimations() {
-        try (InputStream is = getClass().getResourceAsStream("/player_sprites.png")) {
-            animations = new BufferedImage[9][6];
+        animations = new BufferedImage[9][6];
 
-            if (is == null) {
-                throw new RuntimeException("Image not found");
+        BufferedImage image = LoadSave.getSpriteAtlas(LoadSave.PLAYER_ATLAS);
+
+        for (int row = 0; row < animations.length; row++) {
+            for (int column = 0; column < animations[row].length; column++) {
+                animations[row][column] = image.getSubimage(column * 64, row * 40, 64, 40);
             }
-
-            try {
-                BufferedImage image = ImageIO.read(is);
-
-                for (int row = 0; row < animations.length; row++) {
-                    for (int column = 0; column < animations[row].length; column++) {
-                        animations[row][column] = image.getSubimage(column * 64, row * 40, 64, 40);
-                    }
-                }
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
         }
     }
 
