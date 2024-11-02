@@ -2,6 +2,7 @@ package okano.dev.java.agame.entities;
 
 import okano.dev.java.agame.main.Game;
 import okano.dev.java.agame.utilz.Constants;
+import okano.dev.java.agame.utilz.HelperMethods;
 import okano.dev.java.agame.utilz.LoadSave;
 
 import java.awt.Graphics;
@@ -15,6 +16,7 @@ public class Player extends Entity {
     private boolean left, up, right, down;
     private boolean moving = false, attacking = false;
     private float playerSpeed = 2.0f;
+    private int[][] levelData;
 
     public Player(float x, float y, int width, int height) {
         super(x, y, width, height);
@@ -72,19 +74,27 @@ public class Player extends Entity {
     private void updatePos() {
         moving = false;
 
+        if (!left && !right && !up && !down) {
+            return;
+        }
+
+        float xSpeed = 0, ySpeed = 0;
+
         if (left && !right) {
-            x -= playerSpeed;
-            moving = true;
+            xSpeed = -playerSpeed;
         } else if (right && !left) {
-            x += playerSpeed;
-            moving = true;
+            xSpeed += playerSpeed;
         }
 
         if (up && !down) {
-            y -= playerSpeed;
-            moving = true;
+            ySpeed = -playerSpeed;
         } else if (down && !up) {
-            y += playerSpeed;
+            ySpeed = playerSpeed;
+        }
+
+        if (HelperMethods.canMoveHere(x + xSpeed, y + ySpeed, width, height, levelData)) {
+            this.x += xSpeed;
+            this.y += ySpeed;
             moving = true;
         }
     }
@@ -99,6 +109,10 @@ public class Player extends Entity {
                 animations[row][column] = image.getSubimage(column * 64, row * 40, 64, 40);
             }
         }
+    }
+
+    public void loadLevelData(int[][] levelData) {
+        this.levelData = levelData;
     }
 
     public boolean isLeft() {

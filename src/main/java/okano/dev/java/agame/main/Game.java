@@ -27,7 +27,6 @@ public class Game implements Runnable {
     public Game() {
         this.initClasses();
 
-        this.levelManager = new LevelManager(this);
         this.gamePanel = new GamePanel(this);
         this.gameWindow = new GameWindow(this.gamePanel);
 
@@ -36,7 +35,9 @@ public class Game implements Runnable {
     }
 
     private void initClasses() {
+        this.levelManager = new LevelManager(this);
         this.player = new Player(200, 200, (int) (64 * Game.SCALE), (int) (40 * Game.SCALE));
+        this.player.loadLevelData(this.levelManager.getCurrentLevelData());
     }
 
     private void startGameLoop() {

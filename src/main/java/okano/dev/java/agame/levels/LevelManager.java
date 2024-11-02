@@ -40,4 +40,8 @@ public class LevelManager {
     public void update() {
 
     }
+
+    public int[][] getCurrentLevelData() {
+        return levelOne.getLevelData();
+    }
 }
