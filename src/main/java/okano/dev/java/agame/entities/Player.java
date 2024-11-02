@@ -17,21 +17,23 @@ public class Player extends Entity {
     private boolean moving = false, attacking = false;
     private float playerSpeed = 2.0f;
     private int[][] levelData;
+    private float xDrawOffset = 21 * Game.SCALE;
+    private float yDrawOffset = 4 * Game.SCALE;
 
     public Player(float x, float y, int width, int height) {
         super(x, y, width, height);
         loadAnimations();
+        initHitbox(x, y, 20 * Game.SCALE, 28 * Game.SCALE);
     }
 
     public void update() {
         updatePos();
-        updateHitbox();
         updateAnimationTick();
         setAnimation();
     }
 
     public void render(Graphics g) {
-        g.drawImage(animations[playerAction][animationIndex], (int) x, (int) y, (int) (64 * Game.SCALE), (int) (40 * Game.SCALE), null);
+        g.drawImage(animations[playerAction][animationIndex], (int) (hitbox.x - xDrawOffset), (int) (hitbox.y - yDrawOffset), width, height, null);
         drawHitbox(g);
     }
 
@@ -92,9 +94,9 @@ public class Player extends Entity {
             ySpeed = playerSpeed;
         }
 
-        if (HelperMethods.canMoveHere(x + xSpeed, y + ySpeed, width, height, levelData)) {
-            this.x += xSpeed;
-            this.y += ySpeed;
+        if (HelperMethods.canMoveHere(hitbox.x + xSpeed, hitbox.y + ySpeed, hitbox.width, hitbox.height, levelData)) {
+            hitbox.x += xSpeed;
+            hitbox.y += ySpeed;
             moving = true;
         }
     }

@@ -3,7 +3,7 @@ package okano.dev.java.agame.utilz;
 import okano.dev.java.agame.main.Game;
 
 public class HelperMethods {
-    public static boolean canMoveHere(float x, float y, int width, int height, int[][] levelData) {
+    public static boolean canMoveHere(float x, float y, float width, float height, int[][] levelData) {
         // check top left and bottom right first
 
         if (!isSolid(x, y, levelData)) {
