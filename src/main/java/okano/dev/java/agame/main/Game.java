@@ -36,7 +36,7 @@ public class Game implements Runnable {
     }
 
     private void initClasses() {
-        this.player = new Player(200, 200);
+        this.player = new Player(200, 200, (int) (64 * Game.SCALE), (int) (40 * Game.SCALE));
     }
 
     private void startGameLoop() {

@@ -16,19 +16,21 @@ public class Player extends Entity {
     private boolean moving = false, attacking = false;
     private float playerSpeed = 2.0f;
 
-    public Player(float x, float y) {
-        super(x, y);
+    public Player(float x, float y, int width, int height) {
+        super(x, y, width, height);
         loadAnimations();
     }
 
     public void update() {
         updatePos();
+        updateHitbox();
         updateAnimationTick();
         setAnimation();
     }
 
     public void render(Graphics g) {
         g.drawImage(animations[playerAction][animationIndex], (int) x, (int) y, (int) (64 * Game.SCALE), (int) (40 * Game.SCALE), null);
+        drawHitbox(g);
     }
 
     private void updateAnimationTick() {
